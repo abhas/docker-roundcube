@@ -39,14 +39,16 @@ to https://<ip_or_name_of_roundcube_docker>/installer.
 You also can set your settings using the follow envirounment variables using '-e <variable>'
 in the 'docker run' command:
 
-# PROXY_PKG= \                # Format: http[s]://<name_or_ip>[:<port>]
-# PROXY_HTTP= \               # Format: http[s]://<name_or_ip>[:<port>]
-# RCMAIL_USER=roundcube \
-# RCMAIL_PASS=roundcube \
-# RCMAIL_HOST=db \
-# RCMAIL_DB=roundcubemail \
-# RCMAIL_IMAP=localhost \     # Format: [imap|imaps|tls|ssl]://<ip_or_name_imap_host>
-# RCMAIL_SMTP=localhost \     # Format: [smtp|smtps|tls|ssl]://<ip_or_name_smtp_host>
+```
+PROXY_PKG=                 # Format: http[s]://<name_or_ip>[:<port>]
+PROXY_HTTP=                # Format: http[s]://<name_or_ip>[:<port>]
+RCMAIL_USER=roundcube 
+RCMAIL_PASS=roundcube 
+RCMAIL_HOST=db 
+RCMAIL_DB=roundcubemail 
+RCMAIL_IMAP=localhost      # Format: [imap|imaps|tls|ssl]://<ip_or_name_imap_host>
+RCMAIL_SMTP=localhost      # Format: [smtp|smtps|tls|ssl]://<ip_or_name_smtp_host>
+```
 
 ## More Info
 
