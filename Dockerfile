@@ -131,10 +131,8 @@ RUN cd /var/www/webmail; \
 RUN cd /var/www/webmail/plugins/calendar/lib; \
     # Uncomment the next line if need proxy
     # export https_proxy=http://10.0.220.11:8080;  export http_proxy=http://10.0.220.11:8080 &&; \
-    composer config -g github-oauth.github.com 5b20d55525892090fb582e17395360088d40b1e8; \
-    composer -v remove sabre/dav; \
-    composer -v remove sabre/vobject; \
-    composer -vv require --update-with-dependencies sabre/dav 3.2.0
+    composer -v remove -n sabre/dav; \
+    composer -vv require -n sabre/dav
 
 COPY config.inc.php /var/www/webmail/config/config.inc.php
 COPY run.sh /run.sh
