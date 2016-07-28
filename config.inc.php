@@ -80,7 +80,7 @@ $config['identities_level'] = 2;
 // PLUGINS
 // ----------------------------------
 // List of active plugins (in plugins/ directory)
-$config['plugins'] = array('acl', 'attachment_position', 'calendar', 'contextmenu', 'hide_blockquote', 'infinitescroll', 'keyboard_shortcuts_ng', 'listcommands', 'managesieve', 'markasjunk', 'odfviewer', 'pdfviewer', 'removeattachments', 'sieverules', 'threecol', 'thunderbird_labels', 'zipdownload');
+$config['plugins'] = array('acl', 'attachment_position', 'calendar', 'contextmenu', 'hide_blockquote', 'infinitescroll', 'keyboard_shortcuts_ng', 'markasjunk', 'removeattachments', 'sieverules', 'threecol', 'thunderbird_labels', 'zipdownload');
 
 // Set the spell checking engine. Possible values:
 // - 'googie'  - the default (also used for connecting to Nox Spell Server, see 'spellcheck_uri' setting)

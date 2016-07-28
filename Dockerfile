@@ -56,14 +56,12 @@ RUN mkdir /etc/nginx/ssl; \
         # export https_proxy=http://10.0.220.11:8080;  export http_proxy=http://10.0.220.11:8080; \
         wget https://github.com/roundcube/roundcubemail/releases/download/1.2.0/roundcubemail-1.2.0-complete.tar.gz; \
         # Get plugins
-          wget https://github.com/JohnDoh/Roundcube-Plugin-SieveRules-Managesieve/archive/2.3.tar.gz -O managesieve.tar.gz; \
           wget https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu/archive/2.1.2.tar.gz         -O contextmenu.tar.gz; \
           wget https://github.com/corbosman/message_highlight/archive/2.6.tar.gz                     -O messagehighlight.tar.gz; \
           wget https://github.com/messagerie-melanie2/Roundcube-Plugin-Infinite-Scroll/archive/master.tar.gz  -O infinitescroll.tar.gz; \
           wget https://github.com/EstudioNexos/threecol/archive/master.tar.gz                        -O treecol.tar.gz; \
           wget https://github.com/mike-kfed/rcmail-thunderbird-labels/archive/v1.1.3.tar.gz          -O tbirdlabel.tar.gz; \
           wget https://github.com/dsoares/Roundcube-Plugin-RemoveAttachments/archive/0.2.3.tar.gz    -O removeattach.tar.gz; \
-          wget https://github.com/corbosman/listcommands/archive/2.4.tar.gz                          -O listcommands.tar.gz; \
           wget https://github.com/dapphp/Roundcube-Plugin-attachment_position/archive/1.0.0.tar.gz   -O attachposition.tar.gz; \
           wget https://github.com/teonsystems/roundcube-plugin-keyboard-shortcuts-ng/archive/v0.9.4.tar.gz -O kbshortcutsng.tar.gz; \
           wget https://gitlab.awesome-it.de/kolab/roundcube-plugins/repository/archive.tar.gz?ref=feature_caldav -O kolab.tar.gz; \
@@ -78,14 +76,12 @@ RUN mkdir /etc/nginx/ssl; \
         rm /var/www/roundcubemail-1.2.0-complete.tar.gz; \
         echo "Unpack plugins ===============>>>>>>>>>>>>>"; \
           cd /var/www/webmail/plugins; \
-          for i in managesieve.tar.gz \
-            contextmenu.tar.gz \
+          for i in contextmenu.tar.gz \
             messagehighlight.tar.gz \
             infinitescroll.tar.gz \
             treecol.tar.gz \
             tbirdlabel.tar.gz \
             removeattach.tar.gz \
-            listcommands.tar.gz \
             attachposition.tar.gz \
             kbshortcutsng.tar.gz \
             kolab.tar.gz; \
@@ -94,8 +90,6 @@ RUN mkdir /etc/nginx/ssl; \
           mv -v Roundcube-Plugin-Context-Menu-2.1.2 contextmenu; \
           mv -v Roundcube-Plugin-RemoveAttachments-0.2.3 removeattachments; \
           mv -v Roundcube-Plugin-attachment_position-1.0.0 attachment_position; \
-          mv -v Roundcube-Plugin-SieveRules-Managesieve-2.3 sieverules; \
-          mv -v listcommands-2.4 listcommands; \
           mv -v message_highlight-2.6 message_highlight; \
           mv -v threecol-master threecol; \
           mv -v rcmail-thunderbird-labels-1.1.3 thunderbird_labels; \
@@ -103,8 +97,6 @@ RUN mkdir /etc/nginx/ssl; \
           mv -v roundcube-plugin-keyboard-shortcuts-ng-0.9.4/ keyboard_shortcuts_ng; \
           mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/calendar .; \
           mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/libcalendaring .; \
-          mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/odfviewer .; \
-          mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/pdfviewer .; \
           mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/piwik_analytics .; \
           rm -rf `ls -d roundcube-plugins-feature_caldav-*`; \
         echo "Uncompressing themes ===============>>>>>>>>>>>>>"; \
