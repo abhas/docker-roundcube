@@ -67,7 +67,8 @@ RUN mkdir /etc/nginx/ssl; \
           wget https://gitlab.awesome-it.de/kolab/roundcube-plugins/repository/archive.tar.gz?ref=feature_caldav -O kolab.tar.gz; \
         # Get themes
           wget https://github.com/EstudioNexos/mabola-blue/archive/master.tar.gz                     -O mabola-blue.tar.gz; \
-          wget https://github.com/EstudioNexos/mabola/archive/master.tar.gz                          -O mabola.tar.gz
+          wget https://github.com/EstudioNexos/mabola/archive/master.tar.gz                          -O mabola.tar.gz; \
+          wget https://github.com/filhocf/roundcubemail-skin-chameleon/archive/master.tar.gz         -O chameleon.tar.gz
 
 
     RUN cd /var/www; \
@@ -106,6 +107,7 @@ RUN mkdir /etc/nginx/ssl; \
           echo "Adjust folder's names ===============>>>>>>>>>>>>>"; \
             mv -v mabola-master mabola; \
             mv -v mabola-blue-master mabola-blue; \
+            mv -v roundcubemail-skin-chameleon-master chameleon; \
           chown www-data.www-data /var/www/webmail/ -R; \
           echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
 

@@ -4,6 +4,7 @@ Docker container for [roundcube][1]
 
 > Roundcube webmail is a browser-based multilingual IMAP client with an application-like user interface. It provides full functionality you expect from an email client, including MIME support, address book, folder manipulation, message searching and spell checking.
 
+This package runs Roundcube over Nginx and PHP-FPM.
 
 ## Install dependencies
 
@@ -21,7 +22,7 @@ Process the follow steps:
 
 ```
 $ docker run --name mydb -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
-$ docker exec -it mydb
+$ docker exec -it mydb bash
 <docker_mydb>$ mysql -p #password: my-secret-pw
 mysql> CREATE DATABASE roundcubemail;
 mysql> GRANT ALL PRIVILEGES ON roundcubemail.* TO username@localhost IDENTIFIED BY 'password';
