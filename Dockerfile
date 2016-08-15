@@ -102,7 +102,7 @@ RUN mkdir /etc/nginx/ssl; \
           rm -rf `ls -d roundcube-plugins-feature_caldav-*`; \
         echo "Uncompressing themes ===============>>>>>>>>>>>>>"; \
           cd /var/www/webmail/skins; \
-          for i in mabola.tar.gz mabola-blue.tar.gz; \
+          for i in mabola.tar.gz mabola-blue.tar.gz chameleon.tar.gz; \
             do echo "Uncompressing $i"; tar xf ../../$i; echo "Removing file $i";  rm ../../$i; done; \
           echo "Adjust folder's names ===============>>>>>>>>>>>>>"; \
             mv -v mabola-master mabola; \
