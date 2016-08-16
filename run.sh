@@ -1,5 +1,4 @@
 #!/bin/sh
-unset DEBIAN_FRONTEND
 
 # Envirounment variables
 # PROXY_PKG= \                # Format: http[s]://<name_or_ip>[:<port>]
@@ -14,23 +13,23 @@ unset DEBIAN_FRONTEND
 # RCMAIL_CALENDAR=false\
 # PHP_DATEZONE=
 
-if [ ! $RCMAIL_USER ]
-  then export RCMAIL_USER=roundcube
-elif [ ! $RCMAIL_PASS ]
-  then export RCMAIL_PASS=roundcube
-elif [ ! $RCMAIL_DB ]
-  then export RCMAIL_DB=roundcubemail
-elif [ ! $RCMAIL_HOST ]
-  then export RCMAIL_HOST=localhost
-fi
+#if [ ! $RCMAIL_USER ]
+#  then export RCMAIL_USER=roundcube
+#elif [ ! $RCMAIL_PASS ]
+#  then export RCMAIL_PASS=roundcube
+#elif [ ! $RCMAIL_DB ]
+#  then export RCMAIL_DB=roundcubemail
+#elif [ ! $RCMAIL_HOST ]
+#  then export RCMAIL_HOST=localhost
+#fi
 
 # Adjust database
-sed -i -e "s|roundcube:roundcube@localhost/roundcubemail|$RCMAIL_USER:$RCMAIL_PASS@$RCMAIL_HOST/$RCMAIL_DB|" /var/www/webmail/config/config.inc.php
+#sed -i -e "s|roundcube:roundcube@localhost/roundcubemail|$RCMAIL_USER:$RCMAIL_PASS@$RCMAIL_HOST/$RCMAIL_DB|" /var/www/webmail/config/config.inc.php
 # Adjust imap and smtp servers
-sed -i -e "s/$config['default_host']\ =\ 'localhost';/$config['default_host']\ =\ '$RCMAIL_IMAP';/"  /var/www/webmail/config/config.inc.php
-sed -i -e "s/$config['smtp_server']\ =\ 'localhost';/$config['smtp_server']\ =\ '$RCMAIL_SMTP';/"  /var/www/webmail/config/config.inc.php
+#sed -i -e "s/$config['default_host']\ =\ 'localhost';/$config['default_host']\ =\ '$RCMAIL_IMAP';/"  /var/www/webmail/config/config.inc.php
+#sed -i -e "s/$config['smtp_server']\ =\ 'localhost';/$config['smtp_server']\ =\ '$RCMAIL_SMTP';/"  /var/www/webmail/config/config.inc.php
 # Adjust timezone of PHP
-sed -i -e "s/;date.timezone\ =/date.timezone\ =\ $PHP_DATEZONE/" /etc/php5/fpm/php.ini
+#sed -i -e "s/;date.timezone\ =/date.timezone\ =\ $PHP_DATEZONE/" /etc/php5/fpm/php.ini
 
 cd /etc/init.d/
 ./php5-fpm restart && \

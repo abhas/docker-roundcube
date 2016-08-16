@@ -126,9 +126,11 @@ RUN cd /var/www/webmail/plugins/calendar/lib; \
     # Uncomment the next line if need proxy
     # export https_proxy=http://10.0.220.11:8080;  export http_proxy=http://10.0.220.11:8080 &&; \
     composer -v remove -n sabre/dav; \
-    composer -vv require -n sabre/dav
+    composer -v require -n sabre/dav 1.8.12; \
+    composer -v require -n sabre/http; \
+    composer -v require -n fkooman/oauth-client
 
-COPY config.inc.php /var/www/webmail/config/config.inc.php
+#COPY config.inc.php /var/www/webmail/config/config.inc.php
 COPY run.sh /run.sh
 EXPOSE 80 443
 
