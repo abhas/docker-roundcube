@@ -65,6 +65,10 @@ RUN mkdir /etc/nginx/ssl; \
           wget https://github.com/dapphp/Roundcube-Plugin-attachment_position/archive/1.0.0.tar.gz   -O attachposition.tar.gz; \
           wget https://github.com/teonsystems/roundcube-plugin-keyboard-shortcuts-ng/archive/v0.9.4.tar.gz -O kbshortcutsng.tar.gz; \
           wget https://gitlab.awesome-it.de/kolab/roundcube-plugins/repository/archive.tar.gz?ref=feature_caldav -O kolab.tar.gz; \
+          wget https://github.com/messagerie-melanie2/Roundcube-Plugin-Roundrive/archive/master.tar.gz  -O roundrive.tar.gz; \
+          wget https://github.com/messagerie-melanie2/Roundcube-Skin-Melanie2-Larry-Mobile/archive/master.tar.gz -O melanie2-larry-mobile.tar.gz; \
+          wget https://github.com/messagerie-melanie2/Roundcube-Plugin-Mobile/archive/master.tar.gz  -O plugin-mobile.tar.gz; \
+          wget https://github.com/messagerie-melanie2/Roundcube-Plugin-JQuery-Mobile/archive/master.tar.gz -O jquery-mobile.tar.gz; \
         # Get themes
           wget https://github.com/EstudioNexos/mabola-blue/archive/master.tar.gz                     -O mabola-blue.tar.gz; \
           wget https://github.com/EstudioNexos/mabola/archive/master.tar.gz                          -O mabola.tar.gz; \
@@ -85,7 +89,10 @@ RUN mkdir /etc/nginx/ssl; \
             removeattach.tar.gz \
             attachposition.tar.gz \
             kbshortcutsng.tar.gz \
-            kolab.tar.gz; \
+            kolab.tar.gz \
+            roundrive.tar.gz \
+            plugin-mobile.tar.gz \
+            jquery-mobile.tar.gz; \
             do echo "Uncompressing $i"; tar xf ../../$i; echo "Removing file $i";  rm ../../$i; done; \
         echo "Adjust folder's names ===============>>>>>>>>>>>>>"; \
           mv -v Roundcube-Plugin-Context-Menu-2.1.2 contextmenu; \
@@ -96,18 +103,22 @@ RUN mkdir /etc/nginx/ssl; \
           mv -v rcmail-thunderbird-labels-1.1.3 thunderbird_labels; \
           mv -v Roundcube-Plugin-Infinite-Scroll-master/ infinitescroll; \
           mv -v roundcube-plugin-keyboard-shortcuts-ng-0.9.4/ keyboard_shortcuts_ng; \
+          mv -v Roundcube-Plugin-JQuery-Mobile-master jquery_mobile; \
+          mv -v Roundcube-Plugin-Mobile-master mobile; \
+          mv -v Roundcube-Plugin-Roundrive-master roundrive; \
           mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/calendar .; \
           mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/libcalendaring .; \
           mv -v `ls -d roundcube-plugins-feature_caldav-*`/plugins/piwik_analytics .; \
           rm -rf `ls -d roundcube-plugins-feature_caldav-*`; \
         echo "Uncompressing themes ===============>>>>>>>>>>>>>"; \
           cd /var/www/webmail/skins; \
-          for i in mabola.tar.gz mabola-blue.tar.gz chameleon.tar.gz; \
+          for i in mabola.tar.gz mabola-blue.tar.gz chameleon.tar.gz melanie2-larry-mobile.tar.gz; \
             do echo "Uncompressing $i"; tar xf ../../$i; echo "Removing file $i";  rm ../../$i; done; \
           echo "Adjust folder's names ===============>>>>>>>>>>>>>"; \
             mv -v mabola-master mabola; \
             mv -v mabola-blue-master mabola-blue; \
             mv -v roundcubemail-skin-chameleon-master chameleon; \
+            mv -v Roundcube-Skin-Melanie2-Larry-Mobile-master melanie2_larry_mobile; \
           chown www-data.www-data /var/www/webmail/ -R; \
           echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
 
@@ -126,11 +137,12 @@ RUN cd /var/www/webmail/plugins/calendar/lib; \
     # Uncomment the next line if need proxy
     # export https_proxy=http://10.0.220.11:8080;  export http_proxy=http://10.0.220.11:8080 &&; \
     composer -v remove -n sabre/dav; \
+    composer -v remove -n fkooman/oauth-client; \
     composer -v require -n sabre/dav 1.8.12; \
     composer -v require -n sabre/http; \
-    composer -v require -n fkooman/oauth-client
+    composer -v require -n --prefer-dist fkooman/oauth-client
 
-#COPY config.inc.php /var/www/webmail/config/config.inc.php
+COPY config.inc.php.dtp /var/www/webmail/config/config.inc.php
 COPY run.sh /run.sh
 EXPOSE 80 443
 
