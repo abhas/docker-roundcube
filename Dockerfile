@@ -4,12 +4,15 @@ MAINTAINER Claudio Ferreira "filhocf@gmail.com"
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ARG PKG_PROXY
+ARG TOKEN
+
 #:VOLUME /var/www
 
 # Update all mirrors
 RUN \
     # Set a package proxy in next line
-    # echo 'Acquire::http { Proxy "http://www-mirrordf:3142"; };' > /etc/apt/apt.conf;
+    echo ${PKG_PROXY} > /etc/apt/apt.conf; \
     echo deb http://httpredir.debian.org/debian jessie-backports main >> /etc/apt/sources.list; \
     apt-get update
 
@@ -48,12 +51,13 @@ RUN mkdir /etc/nginx/ssl; \
     sed -i -e "s/#\tinclude\ snippets/\tinclude\ snippets/" /etc/nginx/sites-enabled/default; \
     sed -i -e "s/#\tfastcgi_pass\ unix/\tfastcgi_pass\ unix/" /etc/nginx/sites-enabled/default; \
     sed -i -e "/fastcgi_pass/ { n; s/#\}/\}/}" /etc/nginx/sites-enabled/default; \
-    sed -i -e "s/index.nginx-debian.html/index.nginx-debian.html\ index.php/" /etc/nginx/sites-enabled/default
+    sed -i -e "s/index.nginx-debian.html/index.nginx-debian.html\ index.php/" /etc/nginx/sites-enabled/default; \
+    chown www-data.www-data /var/www -R
 
     # Get Roundcube package
-    RUN cd /var/www; \
-        # Uncomment the next line if need proxy
-        # export https_proxy=http://10.0.220.11:8080;  export http_proxy=http://10.0.220.11:8080; \
+    USER www-data
+    WORKDIR /var/www
+    RUN \
         wget https://github.com/roundcube/roundcubemail/releases/download/1.2.0/roundcubemail-1.2.0-complete.tar.gz; \
         # Get plugins
           wget https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu/archive/2.1.2.tar.gz         -O contextmenu.tar.gz; \
@@ -75,7 +79,7 @@ RUN mkdir /etc/nginx/ssl; \
           wget https://github.com/filhocf/roundcubemail-skin-chameleon/archive/master.tar.gz         -O chameleon.tar.gz
 
 
-    RUN cd /var/www; \
+    RUN \
         tar xf roundcubemail-1.2.0-complete.tar.gz; \
         mv roundcubemail-1.2.0 webmail; \
         rm /var/www/roundcubemail-1.2.0-complete.tar.gz; \
@@ -119,30 +123,30 @@ RUN mkdir /etc/nginx/ssl; \
             mv -v mabola-blue-master mabola-blue; \
             mv -v roundcubemail-skin-chameleon-master chameleon; \
             mv -v Roundcube-Skin-Melanie2-Larry-Mobile-master melanie2_larry_mobile; \
-          chown www-data.www-data /var/www/webmail/ -R; \
-          echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
+          chown www-data.www-data /var/www/webmail/ -R
 
 # Install the Composer - package manager for PHP
-RUN cd /var/www/webmail; \
-    # Uncomment the next line if need proxy
-    # export https_proxy=http://10.0.220.11:8080;  export http_proxy=http://10.0.220.11:8080 &&; \
-    wget https://getcomposer.org/installer -O composer-setup.php; \
+USER root
+WORKDIR /usr/local/bin
+RUN wget https://getcomposer.org/installer -O composer-setup.php; \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"; \
     php composer-setup.php; \
     php -r "unlink('composer-setup.php');"; \
-    mv composer.phar /usr/local/bin/composer
+    mv composer.phar composer; \
+    echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
 
 # Install dependencies for calendar
-RUN cd /var/www/webmail/plugins/calendar/lib; \
-    # Uncomment the next line if need proxy
-    # export https_proxy=http://10.0.220.11:8080;  export http_proxy=http://10.0.220.11:8080 &&; \
-    composer -v remove -n sabre/dav; \
-    composer -v remove -n fkooman/oauth-client; \
-    composer -v require -n sabre/dav 1.8.12; \
-    composer -v require -n sabre/http; \
-    composer -v require -n --prefer-dist fkooman/oauth-client
+USER www-data
+WORKDIR /var/www/webmail/plugins/calendar/lib
+RUN echo 'O token é: '${TOKEN}; \
+    composer config --global github-oauth.github.com ${TOKEN}; \
+    composer -vv remove -n sabre/dav; \
+    composer -vv remove -n fkooman/oauth-client; \
+    composer -vv require -n sabre/dav 1.8.12; \
+    composer -vv require -n sabre/http; \
+    composer -vv require --prefer-source --no-interaction fkooman/oauth-client
 
-COPY config.inc.php.dtp /var/www/webmail/config/config.inc.php
+USER root
 COPY run.sh /run.sh
 EXPOSE 80 443
 
