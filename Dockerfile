@@ -61,7 +61,7 @@ RUN mkdir /etc/nginx/ssl; \
         wget https://github.com/roundcube/roundcubemail/releases/download/1.2.0/roundcubemail-1.2.0-complete.tar.gz; \
         # Get plugins
           wget https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu/archive/2.1.2.tar.gz         -O contextmenu.tar.gz; \
-          wget https://github.com/corbosman/message_highlight/archive/2.6.tar.gz                     -O messagehighlight.tar.gz; \
+          wget https://github.com/corbosman/message_highlight/archive/master.tar.gz                     -O messagehighlight.tar.gz; \
           wget https://github.com/messagerie-melanie2/Roundcube-Plugin-Infinite-Scroll/archive/master.tar.gz  -O infinitescroll.tar.gz; \
           wget https://github.com/EstudioNexos/threecol/archive/master.tar.gz                        -O treecol.tar.gz; \
           wget https://github.com/mike-kfed/rcmail-thunderbird-labels/archive/v1.1.3.tar.gz          -O tbirdlabel.tar.gz; \
