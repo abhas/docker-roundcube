@@ -37,20 +37,6 @@ To first time, you can access the installer and setting your parameters like IMA
 SMTP server, database, activated plugins, etc. To access the installer, point your browser
 to https://<ip_or_name_of_roundcube_docker>/installer.
 
-You also can set your settings using the follow envirounment variables using '-e <variable>'
-in the 'docker run' command:
-
-```
-PROXY_PKG=                 # Format: http[s]://<name_or_ip>[:<port>]
-PROXY_HTTP=                # Format: http[s]://<name_or_ip>[:<port>]
-RCMAIL_USER=roundcube
-RCMAIL_PASS=roundcube
-RCMAIL_HOST=db
-RCMAIL_DB=roundcubemail
-RCMAIL_IMAP=localhost      # Format: [imap|imaps|tls|ssl]://<ip_or_name_imap_host>
-RCMAIL_SMTP=localhost      # Format: [smtp|smtps|tls|ssl]://<ip_or_name_smtp_host>
-```
-
 ## Plugins bundle
 
 This image also add the follow plugins:
@@ -98,6 +84,9 @@ And the follow themes:
 Mabola is a clean and usable skin for latest Roundcube Webmail (http://roundcube.net). Is based on Material Design, Bootstrap and inherits from Larry Skin, so there should be no unstyled content. Also blue version.
 https://github.com/EstudioNexos/mabola-blue
 https://github.com/EstudioNexos/mabola
+
+### Chamaleon: Skin for Roundcube Webmail
+Roundcube skin based in Kolab Community edition.
 
 ## More Info
 

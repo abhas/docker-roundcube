@@ -138,13 +138,13 @@ RUN wget https://getcomposer.org/installer -O composer-setup.php; \
 # Install dependencies for calendar
 USER www-data
 WORKDIR /var/www/webmail/plugins/calendar/lib
-RUN echo 'O token é: '${TOKEN}; \
-    composer config --global github-oauth.github.com ${TOKEN}; \
-    composer -vv remove -n sabre/dav; \
+RUN composer -vv remove -n sabre/dav; \
     composer -vv remove -n fkooman/oauth-client; \
     composer -vv require -n sabre/dav 1.8.12; \
     composer -vv require -n sabre/http; \
-    composer -vv require --prefer-source --no-interaction fkooman/oauth-client
+    composer -vv require --prefer-source --no-interaction fkooman/oauth-client; \
+    rm -rf `find /var -iname .composer`; \
+    rm -rf `find /var -iname .git`
 
 USER root
 COPY run.sh /run.sh
