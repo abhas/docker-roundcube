@@ -32,9 +32,9 @@
 #sed -i -e "s/;date.timezone\ =/date.timezone\ =\ $PHP_DATEZONE/" /etc/php5/fpm/php.ini
 
 cd /etc/init.d/
-./php5-fpm restart && \
+./php7.0-fpm restart && \
 ./nginx restart
 
-if [ ! -f /var/www/webmail/logs/errors ]; then touch /var/www/webmail/logs/errors ; chown www-data:www-data /var/www -R ; fi
+if [ ! -f /var/www/logs/errors ]; then touch /var/www/logs/errors ; chown www-data:www-data /var/www -R ; fi
 
-tail -f /var/www/webmail/logs/errors
+tail -f /var/www/logs/errors /var/log/nginx/* /var/log/php7.0-fpm.logphp7.0-fpm.log
