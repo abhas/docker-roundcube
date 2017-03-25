@@ -1,4 +1,4 @@
-FROM filhocf/docker-php7
+FROM filhocf/php7
 
 MAINTAINER Claudio Ferreira <filhocf@gmail.com>
 
