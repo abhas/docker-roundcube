@@ -1,3 +1,4 @@
 Dockerfile.*
-config.inc.php.*
+config/config.inc.php
+config/sqlite.db
 auth.json
