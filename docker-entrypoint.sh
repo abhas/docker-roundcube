@@ -79,6 +79,12 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
       echo "include('$fn');" >> config/config.inc.php
     done
 
+    # remove config.inc.php.dist for piwik_analytics plugin
+    if [ -f `cat /var/roundcube/config/config.php | grep piwik_analytics_id` ]; then
+      rm $PWD/plugins/piwik_analytics/config.inc.php.dist
+    fi
+
+
     # initialize DB if not SQLite
     echo "${ROUNDCUBEMAIL_DSNW}" | grep -q 'sqlite:' || bin/initdb.sh --dir=$PWD/SQL || bin/updatedb.sh --dir=$PWD/SQL --package=roundcube || echo "Failed to initialize databse. Please run $PWD/bin/initdb.sh manually."
   else

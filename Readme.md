@@ -82,6 +82,7 @@ Check the RoundCube wiki for a reference of [Roundcube config options](https://g
 ## Plugins bundle
 
 This image also add the follow plugins:
+
 ### Roundcube Webmail ContextMenu
 This plugin creates contextmenus for various parts of Roundcube using commands from the toolbars.
 https://github.com/johndoh/roundcube-contextmenu
